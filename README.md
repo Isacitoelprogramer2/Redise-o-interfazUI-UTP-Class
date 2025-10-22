@@ -1,37 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Rediseño-interfazUI-UTP-Class
 
-## Getting Started
+## 🌟 Descripción del Proyecto
 
-First, run the development server:
+Este proyecto consiste en el **rediseño completo** de la interfaz de usuario (UI) de la plataforma académica **UTP-Class**. El objetivo principal es modernizar la experiencia del usuario (UX), optimizar la navegación y mejorar la accesibilidad, transformando una interfaz existente en una aplicación moderna, rápida y altamente usable.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+La arquitectura se ha construido utilizando un *stack* de desarrollo **frontend moderno** que asegura alto rendimiento, escalabilidad y mantenibilidad.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Tecnologías Utilizadas (Tech Stack)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Categoría | Tecnología | Razón de la Elección |
+| :--- | :--- | :--- |
+| **Framework/Librería Principal** | **React.js** | Base para la construcción de interfaces de usuario interactivas y componentes reutilizables. |
+| **Framework de Producción** | **Next.js** | Elegido por sus capacidades de **Server-Side Rendering (SSR)** y **Static Site Generation (SSG)**, que mejoran el SEO y el rendimiento general de la aplicación. |
+| **Lenguaje** | **TypeScript** | Utilizado para añadir tipado estático, lo que resulta en un código más robusto, menos propenso a errores y más fácil de refactorizar en un entorno de equipo. |
+| **Estilización (CSS)** | **Tailwind CSS** | Un *utility-first* framework que permite un desarrollo rápido, modular y altamente personalizable, manteniendo un diseño coherente y responsivo. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Características Destacadas
 
-## Learn More
+* **Experiencia de Usuario (UX) Optimizada:** Flujos de trabajo simplificados para estudiantes y docentes (visualización de notas, gestión de cursos, etc.).
+* **Diseño Responsivo:** Interfaz completamente adaptativa para dispositivos de escritorio, tabletas y móviles (*mobile-first approach*).
+* **Arquitectura de Componentes:** Uso de la filosofía de componentes de React para una reutilización eficiente del código y fácil escalabilidad.
+* **Tipado Robusto:** El uso de TypeScript garantiza la calidad y seguridad del código base.
 
-To learn more about Next.js, take a look at the following resources:
+## 💻 Instalación y Uso
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sigue estos pasos para configurar y ejecutar el proyecto localmente.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerrequisitos
 
-## Deploy on Vercel
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) (se recomienda la versión LTS) y npm/yarn.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Pasos
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# Redise-o-interfazUI-UTP-Class" 
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone https://ruta-de-tu-repositorio
+    cd Rediseño-interfazUI-UTP-Class
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    # o si usas yarn
+    # yarn install
+    ```
+
+3.  **Ejecutar el proyecto en modo desarrollo:**
+    ```bash
+    npm run dev
+    # o si usas yarn
+    # yarn dev
+    ```
+
+4.  **Abrir en tu navegador:**
+    El proyecto estará disponible en `http://localhost:3000`.
+
+## 📌 Contacto y Contribución
+
+Siéntete libre de contactarme para feedback o si tienes preguntas sobre la implementación.
+
+> Creado con 💖 por [Tu Isaac.P de GitHub]
