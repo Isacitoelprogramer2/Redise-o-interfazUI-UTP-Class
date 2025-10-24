@@ -7,7 +7,7 @@ import SidebarNavigation from './SidebarNavigation';
 import SidebarFooter from './SidebarFooter';
 
 const SitebarMain: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string>('home');
 
   const navigationItems = [
@@ -21,7 +21,7 @@ const SitebarMain: React.FC = () => {
   return (
     <div
       className={`h-screen flex flex-col bg-[#191917] text-white transition-all duration-300 ${
-        isOpen ? 'w-64' : 'w-22'
+        isOpen ? 'w-64' : 'w-20'
       } overflow-hidden`}
     >
       <SidebarHeader isOpen={isOpen} onToggle={() => setIsOpen(prev => !prev)} />

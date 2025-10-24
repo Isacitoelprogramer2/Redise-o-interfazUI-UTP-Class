@@ -10,7 +10,7 @@ interface SidebarHeaderProps {
 
 const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isOpen, onToggle }) => {
   return (
-    <div className={`group relative flex items-center p-4 border-b border-neutral-800 transition-all duration-200 ${
+    <div className={`group relative flex items-center px-5 py-7 border-b border-neutral-700 transition-all duration-200 ${
       isOpen ? 'justify-between' : 'justify-center group-hover:justify-center'
     }`}>
       <div className={`flex items-center gap-3 transition-opacity duration-200 ${!isOpen ? 'group-hover:opacity-0' : ''}`}>

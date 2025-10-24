@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Book, MessageCircle, BookOpen, Calendar, Mail } from 'lucide-react';
+import Tooltip from '@/Components/System/tooltip';
 
 interface NavigationItem {
   id: string;
@@ -18,12 +19,12 @@ interface SidebarNavigationProps {
 
 const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ navigationItems, activeItem, onItemClick, isOpen }) => {
   return (
-    <nav className="flex-1 p-4 space-y-3 overflow-y-auto">
+    <nav className="flex-1 py-4 px-3 space-y-3 overflow-y-auto">
       {navigationItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeItem === item.id;
 
-        return (
+        const button = (
           <button
             key={item.id}
             onClick={() => onItemClick(item.id)}
@@ -36,6 +37,14 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ navigationItems, 
             <Icon size={20} />
             {isOpen && <span className="font-medium">{item.label}</span>}
           </button>
+        );
+
+        return isOpen ? (
+          button
+        ) : (
+          <Tooltip key={item.id} content={item.label}>
+            {button}
+          </Tooltip>
         );
       })}
     </nav>

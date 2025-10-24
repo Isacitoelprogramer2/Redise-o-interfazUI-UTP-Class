@@ -18,16 +18,16 @@ const SidebarFooter: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
       )}
 
       {/* Contenedor perfil usuario */}
-      <div className={`flex items-center ${isOpen ? 'gap-3 py-2 px-3' : 'justify-center py-2'} rounded-[10px] bg-[#3F3F3F] hover:bg-neutral-700/50 transition-colors cursor-pointer`}>
+      <div className={`flex items-center ${isOpen ? 'gap-3 py-2 px-3 bg-[#3F3F3F] border border-neutral-400' : 'justify-center'} rounded-[10px] hover:bg-neutral-700/50 transition-colors cursor-pointer`}>
         {/* Imagen del usuario */}
-        <Image src="/alex-suprun-ZHvM3XIOHoE-unsplash.jpg" alt="User Image" width={40} height={40} className="rounded-full border-[1.5px] border-red-500" unoptimized />
+        <Image src="/alex-suprun-ZHvM3XIOHoE-unsplash.jpg" alt="User Image" width={45} height={45} className="rounded-full border-[1.5px] border-red-500" unoptimized />
         {isOpen && (
           <>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#FFFFFF] truncate">
+              <p className="text-sm font-semibold text-[#FFFFFF] truncate">
                 Juan Pérez
               </p>
-              <p className="text-xs text-[#BDBDBD] truncate">
+              <p className="text-sm text-[#BDBDBD] truncate">
                 U73828385
               </p>
             </div>

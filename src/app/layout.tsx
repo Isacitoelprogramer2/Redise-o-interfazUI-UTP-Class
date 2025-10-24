@@ -3,7 +3,7 @@ import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 
 const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+  variable: "--font-Poppins",
   subsets: ["latin"],
 });
 
