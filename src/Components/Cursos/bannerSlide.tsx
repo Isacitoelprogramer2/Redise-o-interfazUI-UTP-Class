@@ -1,141 +1,149 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
+const images = [
+  "/banners/Banner Class_Beca Pariente_RDVYEO.jpg",
+  "/banners/Banner Class_ELZPYZ.jpg",
+  "/banners/Banner-phising-alumno_YAYEVF.png",
+  "/banners/NUEVO-BANNER-NUEVAS-FILIALES-CLASS_SCDVQP.jpg",
+];
+
+const AUTOPLAY_MS = 3000;
+const SWIPE_THRESHOLD_RATIO = 0.15; // 15% del ancho
 
 const BannerSlide: React.FC = () => {
-  // Array de imágenes para el banner (puedes reemplazar con tus propias URLs)
-  const images = [
-    '/banners/Banner Class_Beca Pariente_RDVYEO.jpg',
-    '/banners/Banner Class_ELZPYZ.jpg',
-    '/banners/Banner-phising-alumno_YAYEVF.png',
-    '/banners/NUEVO-BANNER-NUEVAS-FILIALES-CLASS_SCDVQP.jpg',
-  ];
-
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [index, setIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [startPos, setStartPos] = useState(0);
-  const [currentTranslate, setCurrentTranslate] = useState(0);
-  const [slideWidth, setSlideWidth] = useState(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const [deltaX, setDeltaX] = useState(0); // desplazamiento relativo durante drag
+  const [paused, setPaused] = useState(false);
 
-  // Obtener el ancho del slide
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const startXRef = useRef(0);
+  const widthRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  // Observa el ancho real del contenedor (cambia con resize o cargas)
   useEffect(() => {
-    const updateWidth = () => {
-      if (sliderRef.current) {
-        setSlideWidth(sliderRef.current.offsetWidth);
-      }
-    };
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0].contentRect.width;
+      widthRef.current = w;
+    });
+    ro.observe(el);
+    // set inicial
+    widthRef.current = el.getBoundingClientRect().width;
+
+    return () => ro.disconnect();
   }, []);
 
-  // Cambio automático cada 3 segundos
+  // Autoplay (pausado si arrastras o si el mouse está encima)
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+    if (paused || isDragging) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [paused, isDragging]);
 
-  // Función para cambiar al siguiente slide
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  const goTo = (i: number) => {
+    const n = images.length;
+    setIndex(((i % n) + n) % n);
   };
 
-  // Función para cambiar al slide anterior
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  const next = () => goTo(index + 1);
+  const prev = () => goTo(index - 1);
 
-  // Manejo de eventos de mouse/touch para swipe
-  const handleStart = (clientX: number) => {
+  // Pointer events (mouse + touch unificados)
+  const onPointerDown: React.PointerEventHandler = (e) => {
+    // Solo botón principal
+    if (e.pointerType === "mouse" && e.button !== 0) return;
     setIsDragging(true);
-    setStartPos(clientX);
+    startXRef.current = e.clientX;
+    setDeltaX(0);
+
+    // Capturamos para seguir recibiendo move/up aunque salga del elemento
+    (e.target as Element).setPointerCapture?.(e.pointerId);
   };
 
-  const handleMove = (clientX: number) => {
+  const onPointerMove: React.PointerEventHandler = (e) => {
     if (!isDragging) return;
-    const currentPosition = clientX;
-    const diff = startPos - currentPosition;
-    setCurrentTranslate(diff);
+    const dx = e.clientX - startXRef.current;
+    // Animación sin transición: usa RAF para evitar demasiados re-renders
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      setDeltaX(dx);
+    });
   };
 
-  const handleEnd = () => {
+  const onPointerUp: React.PointerEventHandler = (e) => {
     if (!isDragging) return;
     setIsDragging(false);
-    const threshold = 50; // Umbral para considerar swipe
-    if (Math.abs(currentTranslate) > threshold) {
-      if (currentTranslate > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
+    const w = widthRef.current || 1;
+    const threshold = w * SWIPE_THRESHOLD_RATIO;
+
+    if (Math.abs(deltaX) > threshold) {
+      deltaX < 0 ? next() : prev();
     }
-    setCurrentTranslate(0);
+    setDeltaX(0);
   };
 
-  // Eventos de mouse
-  const handleMouseDown = (e: React.MouseEvent) => {
-    handleStart(e.clientX);
-  };
+  // Limpieza si el componente se desmonta mientras se arrastra
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    handleMove(e.clientX);
-  };
+  // Transform calculado
+  const transform = useMemo(() => {
+    const w = widthRef.current || 0;
+    return `translateX(${-(index * w) + (isDragging ? deltaX : 0)}px)`;
+  }, [index, isDragging, deltaX]);
 
-  const handleMouseUp = () => {
-    handleEnd();
-  };
-
-  // Eventos de touch
-  const handleTouchStart = (e: React.TouchEvent) => {
-    handleStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    handleEnd();
-  };
+  // Transición solo cuando NO arrastras (snap/auto)
+  const transitionClass = isDragging
+    ? ""
+    : "transition-transform duration-500 ease-in-out";
 
   return (
-    <div className="relative rounded-2xl w-full h-40 aspect-video overflow-hidden">
-      {/* Contenedor del slider */}
+    <div
+      ref={containerRef}
+      className="flex flex-col rounded-2xl w-full h-[25vh] aspect-video overflow-hidden select-none"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div
-        ref={sliderRef}
-        className="flex h-full transition-transform duration-500 ease-in-out cursor-grab active:cursor-grabbing"
-        style={{
-          transform: `translateX(${-currentIndex * slideWidth + currentTranslate}px)`,
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp} // Para soltar si sale del contenedor
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        ref={trackRef}
+        className={`flex h-fit cursor-grab active:cursor-grabbing ${transitionClass}`}
+        style={{ transform }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
-        {images.map((image, index) => (
-          <div key={index} className="shrink-0 w-full h-full">
+        {images.map((src, i) => (
+          <div key={i} className="shrink-0 w-full h-fit">
             <img
-              src={image}
-              alt={`Banner ${index + 1}`}
-              className="w-full h-full object-contain"
+              src={src}
+              alt={`Banner ${i + 1}`}
+              className="w-full h-full object-cover" // cover para llenar sin bandas
+              draggable={false}
             />
           </div>
         ))}
       </div>
 
-      {/* Dots indicadores */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {images.map((_, index) => (
+      <div className="flex justify-center gap-2 mt-2">
+        {images.map((_, i) => (
           <button
-            key={index}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentIndex ? 'bg-white' : 'bg-white/50'
+            key={i}
+            aria-label={`Ir al slide ${i + 1}`}
+            className={`h-1 w-6 rounded-2xl transition-colors ${
+              i === index ? "bg-white" : "bg-white/50"
             }`}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => goTo(i)}
           />
         ))}
       </div>
@@ -144,3 +152,4 @@ const BannerSlide: React.FC = () => {
 };
 
 export default BannerSlide;
+

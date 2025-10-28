@@ -7,6 +7,7 @@ import SearchInput from '@/Components/System-UI/searchInput';
 import { useState } from 'react';
 import { AdvancedSelect, type Option } from '@/Components/System-UI/Select';
 import { Tabs, TabItem } from '@/Components/System-UI/Tabs';
+import { ActividadesSemanales } from '@/Components/Cursos/ActividadesSemanales';
 import BannerSlide from '@/Components/Cursos/bannerSlide';
 
 const Periodo: Option[] = [
@@ -83,12 +84,11 @@ export default function Home() {
       </div>
         
        <div className="ml-8 w-64 flex flex-col gap-6">
-        {/* Sección 2 */}
-        
+
+
+        {/* Sección 2-Notificaciónes y actividades de la semana */}
         <div className="grid grid-cols-1">
-          {filteredCursos.slice(0, 3).map((curso, index) => (
-            <CursoCard key={index} curso={curso} />
-          ))}
+          <ActividadesSemanales />
         </div>
        </div>
         

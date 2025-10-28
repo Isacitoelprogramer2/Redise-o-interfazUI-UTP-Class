@@ -12,16 +12,16 @@ const SitebarMain: React.FC = () => {
 
   const navigationItems = [
     { id: 'home', label: 'Cursos', icon: Book },
-    { id: 'analytics', label: 'Chat', icon: MessageCircle },
-    { id: 'users', label: 'Calendario', icon: Calendar },
-    { id: 'documents', label: 'Correo UTP', icon: Mail },
-    { id: 'settings', label: 'UTP+biblio', icon: BookOpen },
+    { id: 'chat', label: 'Chat', icon: MessageCircle },
+    { id: 'calendario', label: 'Calendario', icon: Calendar },
+    { id: 'correo-utp', label: 'Correo UTP', icon: Mail },
+    { id: 'biblioteca', label: 'UTP+biblio', icon: BookOpen },
   ];
 
   return (
     <div
       className={`h-screen flex flex-col bg-[#191917] text-white transition-all duration-300 ${
-        isOpen ? 'w-64' : 'w-20'
+        isOpen ? 'w-74' : 'w-0 md:w-20'
       } overflow-hidden`}
     >
       <SidebarHeader isOpen={isOpen} onToggle={() => setIsOpen(prev => !prev)} />
