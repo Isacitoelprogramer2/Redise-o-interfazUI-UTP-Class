@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Book, MessageCircle, BookOpen, Calendar, Mail } from 'lucide-react';
-import Tooltip from '@/Components/System/tooltip';
+import Tooltip from '@/Components/System-UI/tooltip';
 
 interface NavigationItem {
   id: string;
