@@ -131,7 +131,7 @@ export const Notificaciones: React.FC = () => {
 
   // Renderizado del componente
   return (
-    <div className="relative">
+    <div className="relative custom-scrollbar">
       {/* Botón para abrir las notificaciones */}
       <button
         ref={triggerRef}

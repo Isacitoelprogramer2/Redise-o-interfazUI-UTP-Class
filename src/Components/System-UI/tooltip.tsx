@@ -43,9 +43,11 @@ interface TooltipPortalProps {
 }
 
 const TooltipPortal: React.FC<TooltipPortalProps> = ({ isVisible, position, content }) => {
+  if (typeof document === 'undefined') return null;
+
   return ReactDOM.createPortal(
     <div
-      className={`fixed bg-black text-white text-sm px-2 py-1 rounded shadow-lg z-50 whitespace-nowrap pointer-events-none transition-all duration-200 ease-out ${
+      className={`fixed bg-neutral-800 text-white text-sm px-2 py-1 rounded shadow-lg z-50 whitespace-nowrap pointer-events-none transition-all duration-200 ease-out ${
         isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
       }`}
       style={{ top: position.top, left: position.left, transform: 'translateY(-50%)' }}
