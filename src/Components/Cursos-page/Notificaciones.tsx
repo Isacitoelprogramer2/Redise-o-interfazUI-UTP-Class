@@ -138,7 +138,7 @@ export const Notificaciones: React.FC = () => {
         onClick={toggle}
         aria-expanded={isOpen}
         aria-label="Ver notificaciones"
-        className="p-3 w-full justify-start flex items-center gap-2 font-semibold bg-neutral-800 rounded-xl hover:bg-neutral-700 transition-colors"
+        className="p-3 w-full justify-start flex items-center gap-2 font-semibold bg-zinc-200 dark:bg-neutral-800 rounded-xl hover:bg-zinc-300 dark:hover:bg-neutral-700 transition-colors text-zinc-900 dark:text-white"
       >
         <div className="relative">
           <Bell size={20} />
@@ -167,17 +167,17 @@ export const Notificaciones: React.FC = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="titulo-notificaciones"
-            className={`absolute top-full left-0 w-full bg-neutral-800 px-4 pb-4 rounded-lg shadow-lg z-50 transition-all duration-300 ease-out origin-top overflow-y-auto overscroll-contain ${
+            className={`absolute top-full left-0 w-full bg-white dark:bg-neutral-800 px-4 pb-4 rounded-lg shadow-lg z-50 transition-all duration-300 ease-out origin-top overflow-y-auto overscroll-contain ${
               isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
             }`}
             style={{ maxHeight: modalMaxH ? `${modalMaxH}px` : undefined }}
           >
             {/* Encabezado del modal con título y botón de cerrar */}
-            <div className="sticky top-0 z-20 -mx-4 p-4 bg-neutral-800/90 supports-backdrop-filter:bg-neutral-800/70 backdrop-blur border-b border-neutral-700 flex justify-between items-center">
-              <h3 id="titulo-notificaciones" className="text-lg font-semibold">Notificaciones</h3>
+            <div className="sticky top-0 z-20 -mx-4 p-4 bg-white/90 dark:bg-neutral-800/90 supports-backdrop-filter:bg-white/70 dark:supports-backdrop-filter:bg-neutral-800/70 backdrop-blur border-b border-zinc-300 dark:border-neutral-700 flex justify-between items-center">
+              <h3 id="titulo-notificaciones" className="text-lg font-semibold text-zinc-900 dark:text-white">Notificaciones</h3>
               <button
                 onClick={close}
-                className="p-1 rounded hover:bg-neutral-700 text-gray-400 hover:text-gray-200"
+                className="p-1 rounded hover:bg-zinc-200 dark:hover:bg-neutral-700 text-zinc-600 dark:text-gray-400 hover:text-zinc-900 dark:hover:text-gray-200"
                 aria-label="Cerrar notificaciones"
               >
                 <X className="w-5 h-5" />
@@ -192,19 +192,19 @@ export const Notificaciones: React.FC = () => {
                   anuncio: {
                     label: 'Anuncio',
                     className:
-                      'bg-yellow-900/40 text-yellow-200 border border-yellow-700/40',
+                      'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-200 border border-yellow-300 dark:border-yellow-700/40',
                   },
                   foro: {
                     label: 'Foro',
-                    className: 'bg-emerald-900/40 text-emerald-200 border border-emerald-700/40',
+                    className: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700/40',
                   },
                   tarea: {
                     label: 'Tarea',
-                    className: 'bg-fuchsia-900/40 text-fuchsia-200 border border-fuchsia-700/40',
+                    className: 'bg-fuchsia-100 dark:bg-fuchsia-900/40 text-fuchsia-800 dark:text-fuchsia-200 border border-fuchsia-300 dark:border-fuchsia-700/40',
                   },
                   evaluacion: {
                     label: 'Evaluación',
-                    className: 'bg-indigo-900/40 text-indigo-200 border border-indigo-700/40',
+                    className: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700/40',
                   },
                 };
                 return (
@@ -217,9 +217,9 @@ export const Notificaciones: React.FC = () => {
                       aria-expanded={!isClosed}
                       aria-controls={`lista-semana-${semana}`}
                     >
-                      <h4 className="text-xl font-semibold">Semana {semana}</h4>
+                      <h4 className="text-xl font-semibold text-zinc-900 dark:text-white">Semana {semana}</h4>
                       <ChevronDown
-                        className={`transition-transform ${isClosed ? 'rotate-180' : ''}`}
+                        className={`transition-transform text-zinc-700 dark:text-white ${isClosed ? 'rotate-180' : ''}`}
                         aria-hidden
                       />
                     </button>
@@ -232,7 +232,7 @@ export const Notificaciones: React.FC = () => {
                       {items.map((n, index) => (
                         <li
                           key={`${semana}-${index}`}
-                          className="rounded-2xl border border-neutral-700 bg-neutral-900/70 p-4 shadow-sm"
+                          className="rounded-2xl border border-zinc-300 dark:border-neutral-700 bg-zinc-50 dark:bg-neutral-900/70 p-4 shadow-sm"
                         >
                           {/* Fila superior: chip y tiempo */}
                           <div className="flex items-center justify-between">
@@ -241,16 +241,16 @@ export const Notificaciones: React.FC = () => {
                             >
                               {chip[n.tipo].label}
                             </span>
-                            <span className="text-sm text-neutral-400">{`Hace ${n.haceHoras} horas`}</span>
+                            <span className="text-sm text-zinc-600 dark:text-neutral-400">{`Hace ${n.haceHoras} horas`}</span>
                           </div>
 
                           {/* Curso */}
-                          <div className="mt-3 text-[#94D8FF] font-regular leading-tight">
+                          <div className="mt-3 text-[#3b82f6] dark:text-[#94D8FF] font-regular leading-tight">
                             {n.curso}
                           </div>
 
                           {/* Mensaje */}
-                          <p className="mt-2 text-neutral-100 text-sm leading-snug">
+                          <p className="mt-2 text-zinc-800 dark:text-neutral-100 text-sm leading-snug">
                             {n.mensaje}
                           </p>
                         </li>

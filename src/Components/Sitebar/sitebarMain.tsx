@@ -20,7 +20,7 @@ const SitebarMain: React.FC = () => {
 
   return (
     <div
-      className={`h-screen flex flex-col bg-[#191917] text-white transition-all duration-300 ${
+      className={`h-screen flex flex-col bg-[var(--sidebar-bg)] text-[var(--sidebar-text)] transition-all duration-300 ${
         isOpen ? 'w-74' : 'w-0 md:w-20'
       } overflow-hidden`}
     >

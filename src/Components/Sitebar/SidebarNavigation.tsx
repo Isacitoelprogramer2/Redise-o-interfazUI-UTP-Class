@@ -30,8 +30,8 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ navigationItems, 
             onClick={() => onItemClick(item.id)}
             className={`w-full flex items-center ${isOpen ? 'gap-3 px-4' : 'justify-center px-2'} py-3 rounded-lg transition-all ${
               isActive
-                ? 'bg-[#3F3F3F] text-[#FFFFFF] border border-[#7F7F7F]'
-                : 'text-[#BDBDBD] hover:bg-neutral-700/50 hover:text-[#FFFFFF]'
+                ? 'bg-[var(--sidebar-active)] text-[var(--sidebar-text)] border border-[var(--sidebar-border)]'
+                : 'text-zinc-600 dark:text-[#BDBDBD] hover:bg-zinc-100 dark:hover:bg-neutral-700/50 hover:text-zinc-900 dark:hover:text-[#FFFFFF]'
             }`}
           >
             <Icon size={20} />

@@ -104,12 +104,12 @@ export default function Home() {
   );
 
   return (
-    <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex min-h-screen bg-[var(--background)] font-sans">
       {/* Sidebar principal */}
       <SitebarMain />
 
       {/* Contenido principal dividido en paneles */}
-      <main className="flex flex-row p-4 bg-white dark:bg-black w-full gap-4 h-[calc(100vh-2rem)]">
+      <main className="flex flex-row p-4 bg-[var(--background)] w-full gap-4 h-[calc(100vh-2rem)]">
         {/* Panel principal: Cursos y anuncios (mayor proporción de ancho) */}
         <section className="flex-3 flex flex-col h-full overflow-hidden">
           {/* Banner de anuncios */}
@@ -118,7 +118,7 @@ export default function Home() {
           {/* Sección de cursos */}
           <div className="flex flex-col flex-1 min-h-0">
             {/* Título de la sección */}
-            <h1 className="text-xl font-bold mb-4 text-black dark:text-white">Mis Cursos</h1>
+            <h1 className="text-xl font-bold mb-4 text-[var(--foreground)]">Mis Cursos</h1>
 
             {/* Barra de búsqueda y filtros */}
             <div className="flex flex-row gap-4 mb-4">

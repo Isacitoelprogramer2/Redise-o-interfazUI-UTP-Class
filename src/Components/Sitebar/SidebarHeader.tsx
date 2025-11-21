@@ -10,7 +10,7 @@ interface SidebarHeaderProps {
 
 const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isOpen, onToggle }) => {
   return (
-    <div className={`group relative flex items-center px-5 py-7 border-b border-neutral-700 transition-all duration-200 ${
+    <div className={`group relative flex items-center px-5 py-7 border-b border-neutral-300 dark:border-neutral-700 transition-all duration-200 ${
       isOpen ? 'justify-between' : 'justify-center group-hover:justify-center'
     }`}>
       <div className={`flex items-center gap-3 transition-opacity duration-200 ${!isOpen ? 'group-hover:opacity-0' : ''}`}>
@@ -23,7 +23,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isOpen, onToggle }) => {
       </div>
       <button
         onClick={onToggle}
-        className={`absolute p-2 hover:bg-neutral-800 rounded-lg transition-all duration-200 ${
+        className={`absolute p-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg transition-all duration-200 ${
           isOpen ? 'right-4' : 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden group-hover:flex'
         }`}
         aria-label={isOpen ? "Cerrar sidebar" : "Abrir sidebar"}
@@ -31,9 +31,9 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isOpen, onToggle }) => {
         {/* Icono cambia: cuando está abierto mostramos PanelRightOpen para cerrar hacia la derecha,
             cuando está cerrado mostramos PanelLeftOpen para indicar que puede abrirse */}
         {isOpen ? (
-          <PanelRightOpen size={20} className="text-[#BDBDBD]" />
+          <PanelRightOpen size={20} className="text-zinc-600 dark:text-[#BDBDBD]" />
         ) : (
-          <PanelLeftOpen size={24} className="text-[#BDBDBD]" />
+          <PanelLeftOpen size={24} className="text-zinc-600 dark:text-[#BDBDBD]" />
         )}
       </button>
     </div>

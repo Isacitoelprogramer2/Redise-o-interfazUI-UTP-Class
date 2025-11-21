@@ -53,9 +53,9 @@ const DATA: Activity[] = [
 /* ---------- UI helpers ---------- */
 function Chip({ variant, children }: { variant: ChipVariant; children: React.ReactNode }) {
   const styles: Record<ChipVariant, string> = {
-    tarea:      "bg-[#4a4b2a] text-[#d7db9d]",      // oliva
-    foro:       "bg-[#2d5f59] text-[#c7efe7]",      // teal verdoso
-    evaluacion: "bg-[#2f3e6b] text-[#c7d7ff]",      // índigo
+    tarea:      "bg-yellow-100 dark:bg-[#4a4b2a] text-yellow-800 dark:text-[#d7db9d]",      // oliva
+    foro:       "bg-teal-100 dark:bg-[#2d5f59] text-teal-800 dark:text-[#c7efe7]",      // teal verdoso
+    evaluacion: "bg-indigo-100 dark:bg-[#2f3e6b] text-indigo-800 dark:text-[#c7d7ff]",      // índigo
   };
   const icons: Record<ChipVariant, React.ComponentType<any>> = {
     tarea: FilePen,
@@ -76,8 +76,8 @@ function Chip({ variant, children }: { variant: ChipVariant; children: React.Rea
 function StatusRow({ kind, label }: { kind: StatusKind; label: string }) {
   const cfg =
     kind === "pendiente"
-      ? { Icon: AlertCircle, text: "text-[#f5c84b]" } // amarillo
-      : { Icon: XCircle, text: "text-[#f06262]" };    // rojo
+      ? { Icon: AlertCircle, text: "text-yellow-600 dark:text-[#f5c84b]" } // amarillo
+      : { Icon: XCircle, text: "text-red-600 dark:text-[#f06262]" };    // rojo
   const { Icon, text } = cfg;
   return (
     <div className="flex items-center gap-2">
@@ -88,11 +88,11 @@ function StatusRow({ kind, label }: { kind: StatusKind; label: string }) {
 }
 
 function ActivityCard({ a }: { a: Activity }) {
-  const topLabelColor = "text-[#94D8FF]"; 
-  const dueMuted = "text-[#a3a3a3]";
+  const topLabelColor = "text-blue-600 dark:text-[#94D8FF]"; 
+  const dueMuted = "text-zinc-600 dark:text-[#a3a3a3]";
 
   return (
-    <article className="rounded-[22px] bg-[#2a2a2a] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+    <article className="rounded-[22px] bg-white dark:bg-[#2a2a2a] p-5 shadow-sm border border-zinc-200 dark:border-transparent dark:shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
       {/* Chip */}
       <div className="mb-4">
         <Chip variant={a.chip.variant}>{a.chip.label}</Chip>
@@ -102,7 +102,7 @@ function ActivityCard({ a }: { a: Activity }) {
       <div className={`text-sm font-light ${topLabelColor} mb-1`}>{a.topLabel}</div>
 
       {/* Course */}
-      <h3 className="text-md leading-tight tracking-wide text-white font-semibold mb-4 uppercase">
+      <h3 className="text-md leading-tight tracking-wide text-zinc-900 dark:text-white font-semibold mb-4 uppercase">
         {a.course}
       </h3>
 
@@ -126,13 +126,13 @@ function ActivityCard({ a }: { a: Activity }) {
 
 export const ActividadesSemanales = () => {
   return (
-    <div className="bg-neutral-900 rounded-2xl h-full text-white max-h-[calc(100vh-2rem)] overflow-y-auto custom-scrollbar">
+    <div className="bg-white dark:bg-neutral-900 rounded-2xl h-full text-zinc-900 dark:text-white max-h-[calc(100vh-2rem)] overflow-y-auto custom-scrollbar border border-zinc-200 dark:border-transparent">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-neutral-900">
+      <header className="sticky top-0 z-10 bg-white dark:bg-neutral-900">
         <div className="mx-auto px-4 py-4 flex items-center gap-3">
           <button
             aria-label="Abrir menú"
-            className="grid place-items-center w-9 h-9 rounded-xl bg-[#1a1a1a] text-white/80"
+            className="grid place-items-center w-9 h-9 rounded-xl bg-zinc-100 dark:bg-[#1a1a1a] text-zinc-700 dark:text-white/80"
           >
             <Menu className="w-5 h-5" />
           </button>

@@ -85,9 +85,9 @@ export const Tabs: React.FC<TabsProps> = ({
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 " +
           "disabled:opacity-50 disabled:cursor-not-allowed";
 
-        const active = "bg-[#FF4545] text-[#FFFFFF]";
+        const active = "bg-[var(--accent-primary)] text-[var(--sidebar-text)] border border-[var(--sidebar-border)]";
         const inactive =
-          "bg-[#191917] text-[#FFFFFF] hover:bg-neutral-600/50 hover:text-[#FFFFFF]";
+          "bg-[var(--background)] text-[var(--foreground)] hover:bg-[var(--input-hover-bg)] hover:text-[var(--sidebar-text)] border border-[var(--input-border)]";
 
         const width = fullWidth ? "flex-1" : "w-auto";
 
@@ -108,7 +108,7 @@ export const Tabs: React.FC<TabsProps> = ({
               {typeof item.count === "number" && (
                 <span
                   className={
-                    "min-w-[1.5rem] px-2 py-0.5 text-xs leading-none " +
+                    "min-w-6 px-2 py-0.5 text-xs leading-none " +
                     "rounded-full bg-white/20 text-white"
                   }
                   aria-hidden="true"

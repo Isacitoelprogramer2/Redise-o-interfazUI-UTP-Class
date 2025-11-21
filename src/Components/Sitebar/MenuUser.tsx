@@ -110,20 +110,20 @@ const MenuUser: React.FC<MenuUserProps> = ({ open, anchorRef, onClose, onOpenSet
 			<div
 				ref={panelRef}
 				style={{ top: position.top, left: position.left }}
-				className={`absolute w-[280px] rounded-2xl border border-neutral-700 bg-[#1F1F1F] text-white shadow-2xl transform transition-all duration-200 ease-out origin-top-left ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+				className={`absolute w-[280px] rounded-2xl border border-zinc-300 dark:border-neutral-700 bg-white dark:bg-[#1F1F1F] text-zinc-900 dark:text-white shadow-2xl transform transition-all duration-200 ease-out origin-top-left ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
 			>
 				<div className="p-3">
-					<h3 id="menu-user-title" className="px-2 pb-2 text-sm font-semibold text-neutral-200">
+					<h3 id="menu-user-title" className="px-2 pb-2 text-sm font-semibold text-zinc-800 dark:text-neutral-200">
 						Tema
 					</h3>
 					{/* Toggle claro/oscuro */}
-					<div className="grid grid-cols-2 gap-2 rounded-2xl bg-[#2B2B2B] p-1">
+					<div className="grid grid-cols-2 gap-2 rounded-2xl bg-zinc-100 dark:bg-[#2B2B2B] p-1">
 						<button
 							onClick={() => setTheme("light")}
 							className={`flex items-center gap-2 rounded-2xl px-3 py-2 text-sm transition-colors ${
 								theme === "light"
-									? "bg-white text-black"
-									: "text-neutral-400 hover:text-white"
+									? "bg-white dark:bg-white text-black shadow-sm"
+									: "text-zinc-500 dark:text-neutral-400 hover:text-zinc-800 dark:hover:text-white"
 							}`}
 							aria-pressed={theme === "light"}
 						>
@@ -133,8 +133,8 @@ const MenuUser: React.FC<MenuUserProps> = ({ open, anchorRef, onClose, onOpenSet
 							onClick={() => setTheme("dark")}
 							className={`flex items-center justify-center gap-2 rounded-2xl px-3 py-2 text-sm transition-colors ${
 								theme === "dark"
-									? "bg-white text-black"
-									: "text-neutral-400 hover:text-white"
+									? "bg-white dark:bg-white text-black shadow-sm"
+									: "text-zinc-500 dark:text-neutral-400 hover:text-zinc-800 dark:hover:text-white"
 							}`}
 							aria-pressed={theme === "dark"}
 						>
@@ -143,21 +143,21 @@ const MenuUser: React.FC<MenuUserProps> = ({ open, anchorRef, onClose, onOpenSet
 					</div>
 				</div>
 
-				<div className="mx-3 h-px bg-neutral-800" />
+				<div className="mx-3 h-px bg-zinc-200 dark:bg-neutral-800" />
 
 				<div className="p-1">
 					<button
 						onClick={onOpenSettings}
-						className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-[15px] text-neutral-300 hover:bg-neutral-800/70 hover:text-white"
+						className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-[15px] text-zinc-700 dark:text-neutral-300 hover:bg-zinc-100 dark:hover:bg-neutral-800/70 hover:text-zinc-900 dark:hover:text-white"
 					>
-						<Settings size={18} className="text-neutral-400" />
+						<Settings size={18} className="text-zinc-500 dark:text-neutral-400" />
 						Configuración
 					</button>
 					<button
 						onClick={onLogout}
-						className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-[15px] text-neutral-300 hover:bg-neutral-800/70 hover:text-white"
+						className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-[15px] text-zinc-700 dark:text-neutral-300 hover:bg-zinc-100 dark:hover:bg-neutral-800/70 hover:text-zinc-900 dark:hover:text-white"
 					>
-						<LogOut size={18} className="text-neutral-400" />
+						<LogOut size={18} className="text-zinc-500 dark:text-neutral-400" />
 						Cerrar Sesión
 					</button>
 				</div>

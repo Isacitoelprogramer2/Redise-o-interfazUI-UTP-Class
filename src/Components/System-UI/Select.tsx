@@ -68,18 +68,18 @@ export function AdvancedSelect({
           className="
             w-full flex items-center justify-between
             px-3 py-3 text-left
-            bg-neutral-900 rounded-lg border border-transparent
+            bg-[var(--input-bg)] rounded-lg border border-[var(--input-border)]
             shadow-sm cursor-pointer
-            hover:border-neutral-500
+            hover:border-zinc-400 dark:hover:border-neutral-500
             focus:outline-none 
             transition-colors
           "
         >
-          <span className={`text-sm ${!selectedValue ? 'text-neutral-500' : 'text-neutral-100'}`}>
+          <span className={`text-sm ${!selectedValue ? 'text-zinc-500 dark:text-neutral-500' : 'text-[var(--text)]'}`}>
             {displayText}
           </span>
           <ChevronDown 
-            className={`h-5 w-5 text-neutral-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            className={`h-5 w-5 text-zinc-500 dark:text-neutral-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           />
         </button>
 
@@ -88,7 +88,7 @@ export function AdvancedSelect({
           <div 
             className="
               absolute z-10 mt-2 w-full
-              bg-neutral-900 border border-neutral-700 rounded-md
+              bg-[var(--background)] border border-[var(--input-border)] rounded-md
               shadow-lg max-h-60 overflow-auto
               origin-top
             "
@@ -103,17 +103,17 @@ export function AdvancedSelect({
                 className={`
                   flex items-center justify-start gap-2
                   px-3 py-2 cursor-pointer
-                  hover:bg-neutral-700
+                  hover:bg-[var(--input-hover-bg)] dark:hover:bg-[var(--input-hover-bg)]
                   transition-colors
-                  ${selectedValue === option.value ? 'bg-neutral-700' : ''}
+                  ${selectedValue === option.value ? 'bg-[var(--input-hover-bg)] dark:bg-[var(--input-hover-bg)]' : ''}
                 `}
               >
                 <span className="w-4 h-4 flex items-center justify-center">
                   {selectedValue === option.value && (
-                    <Check className="h-4 w-4 text-neutral-400" />
+                    <Check className="h-4 w-4 text-[var(--text)]" />
                   )}
                 </span>
-                <span className={`text-sm ${selectedValue === option.value ? 'font-medium text-neutral-100' : 'text-neutral-300'}`}>
+                <span className={`text-sm ${selectedValue === option.value ? 'font-medium text-[var(--text)]' : 'text-[var(--text)]'}`}>
                   {option.label}
                 </span>
               </div>

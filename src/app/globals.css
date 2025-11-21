@@ -1,8 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Tema claro - colores base */
+  --background: #ffffff;  /* Cambiado a blanco */
+  --foreground: #000000;  /* Cambiado a negro */
+  --text: #000000;
+  
+  /* Colores de sidebar y componentes en claro */
+  --sidebar-bg: #000000;  /* Ajustado para consistencia */
+  --sidebar-border: #e5e5e5;
+  --sidebar-hover: #f5f5f5;
+  --sidebar-active: #ff4545;
+  --sidebar-text: #ffffff;  /* Ajustado */
+  --sidebar-text-muted: #737373;
+  
+  /* Colores de cards y contenedores */
+  --card-bg: #ffffff;
+  --card-border: #000000;
+  --card-hover-border: #ff4545;
+  --card-hover-bg: #ffe5e5;
+  
+  /* Input y controles */
+  --input-bg: #fafafa;
+  --input-border: #000000;
+  --input-text: #000000;
+  --input-secundary-bg: #cecece;  /* Ajustado */
+  --input-hover-bg: #ff4545;
+  
+  /* Notificaciones y actividades */
+  --notif-bg: #ffffff;
+  --notif-border: #e5e5e5;
+  --notif-item-bg: #fafafa;
+  
+  /* Colores de estado - mantienen identidad cromática */
+  --accent-primary: #ff4545;  /* Mantiene */
+  --accent-primary-hover: #e63939;
+  --accent-yellow: #f59e0b;
+  --accent-blue: #3b82f6;
+}
+
+:root.dark {
+ /* Tema oscuro - colores actuales */
+  --background: #000000;  /* Mantiene */
+  --foreground: #ffffff;  /* Cambiado para contraste (no especificado, pero sugerido) */
+  --text: #ffffff;
+  
+  /* Colores de sidebar y componentes en oscuro */
+  --sidebar-bg: #191917;  /* Cambiado */
+  --sidebar-border: #404040;
+  --sidebar-hover: #2d2d2d;
+  --sidebar-active: #3F3F3F;
+  --sidebar-text: #ffffff;  /* Ajustado para contraste */
+  --sidebar-text-muted: #7F7F7F;
+  
+  /* Colores de cards y contenedores */
+  --card-bg: #191917;  /* Cambiado */
+  --card-border: #2d2d2d;
+  --card-hover-border: rgba(255, 255, 255, 0.2);
+  --card-hover-bg: #2d2d2d;
+  
+  /* Input y controles */
+  --input-bg: #171717;
+  --input-border: #2d2d2d;
+  --input-text: #ffffff;  /* Ajustado */
+  --input-secundary-bg: #3d3d3d;
+  
+  /* Notificaciones y actividades */
+  --notif-bg: #1a1a1a;
+  --notif-border: #2d2d2d;
+  --notif-item-bg: #2a2a2a;
+  
+  /* Colores de estado - mantienen identidad cromática */
+  --accent-primary: #ff4545;  /* Mantiene */
+  --accent-primary-hover: #ff6060;
+  --accent-yellow: #f59e0b;
+  --accent-blue: #3b82f6;
 }
 
 @theme inline {
@@ -12,17 +84,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Animación para el dropdown del Select */
@@ -47,16 +113,29 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #2D2D2D;
+  background: #d4d4d4;
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #3D3D3D;
+  background: #a3a3a3;
 }
 
 /* Para Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
+  scrollbar-color: #d4d4d4 transparent;
+}
+
+/* Scrollbar en modo oscuro */
+:root.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2D2D2D;
+}
+
+:root.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3D3D3D;
+}
+
+:root.dark .custom-scrollbar {
   scrollbar-color: #2D2D2D transparent;
 }
