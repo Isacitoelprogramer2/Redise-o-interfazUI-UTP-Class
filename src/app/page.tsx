@@ -13,6 +13,7 @@ import { supabase } from '@/Data/SupaBaseClient';
 
 // Tipo de curso esperado por la UI
 type Curso = {
+  id: number;
   nombre: string;
   profesor: string;
   progreso: number;
@@ -42,7 +43,7 @@ export default function Home() {
       setError(null);
       const { data, error } = await supabase
         .from('cursos')
-        .select('nombre, profesor, progreso, modalidad, seccion');
+        .select('id, nombre, profesor, progreso, modalidad, seccion');
       if (!active) return;
       if (error) {
         console.error('Error obteniendo cursos:', error);
@@ -51,6 +52,7 @@ export default function Home() {
       } else {
         // Asegurar el mapeo de los campos esperados por la UI
         const mapped = (data ?? []).map((c: any) => ({
+          id: Number(c.id),
           nombre: String(c.nombre ?? ''),
           profesor: String(c.profesor ?? ''),
           progreso: Number(c.progreso ?? 0),

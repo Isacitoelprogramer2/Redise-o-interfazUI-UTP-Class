@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { Sun, Moon, Settings, LogOut } from "lucide-react";
 
@@ -27,6 +28,7 @@ function getInitialTheme(): "light" | "dark" {
 }
 
 const MenuUser: React.FC<MenuUserProps> = ({ open, anchorRef, onClose, onOpenSettings, onLogout }) => {
+	const router = useRouter();
 	const [mounted, setMounted] = useState(false);
 	const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme());
 	const panelRef = useRef<HTMLDivElement | null>(null);
@@ -154,7 +156,10 @@ const MenuUser: React.FC<MenuUserProps> = ({ open, anchorRef, onClose, onOpenSet
 						Configuración
 					</button>
 					<button
-						onClick={onLogout}
+						onClick={() => {
+							if (onLogout) onLogout();
+							router.push('/login');
+						}}
 						className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-[15px] text-zinc-700 dark:text-neutral-300 hover:bg-zinc-100 dark:hover:bg-neutral-800/70 hover:text-zinc-900 dark:hover:text-white"
 					>
 						<LogOut size={18} className="text-zinc-500 dark:text-neutral-400" />
