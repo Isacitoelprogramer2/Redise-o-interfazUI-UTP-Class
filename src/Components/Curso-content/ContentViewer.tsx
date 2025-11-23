@@ -10,9 +10,10 @@ interface ContentItem {
 
 interface ContentViewerProps {
   content: ContentItem | null;
+  onNext: () => void;
 }
 
-export default function ContentViewer({ content }: ContentViewerProps) {
+export default function ContentViewer({ content, onNext }: ContentViewerProps) {
   if (!content) {
     return (
       <div className="grow border border-(--card-border) rounded-lg bg-(--card-bg) p-6 flex flex-col h-full items-center justify-center">
@@ -52,11 +53,14 @@ export default function ContentViewer({ content }: ContentViewerProps) {
       </div>
 
       <div className="flex justify-between mt-auto">
-        <button className="flex items-center gap-2 px-4 py-2 border border-(--card-border) rounded-lg text-(--text) hover:bg-(--sidebar-hover) transition-colors cursor-pointer">
+        <button className="flex items-center gap-2 px-4 py-2 border border-(--card-border) rounded-lg text-(--text) hover:bg-(--foreground) transition-colors cursor-pointer">
           <ChevronLeft size={18} />
           Anterior
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 bg-(--card-bg) border border-(--card-border) rounded-lg text-(--text) hover:bg-(--sidebar-hover) transition-colors cursor-pointer">
+        <button
+          onClick={onNext}
+          className="flex items-center gap-2 px-4 py-2 bg-(--card-bg) border border-(--card-border) rounded-lg text-(--text) hover:bg-(--foreground) transition-colors cursor-pointer"
+        >
           Siguiente
           <ChevronRight size={18} />
         </button>

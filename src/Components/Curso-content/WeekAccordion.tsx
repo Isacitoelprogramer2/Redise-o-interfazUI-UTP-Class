@@ -20,17 +20,17 @@ interface Week {
 interface WeekAccordionProps {
   weeks?: Week[];
   onSelectContent?: (content: ContentItem) => void;
+  expandedWeek: string | number | null;
+  onToggleWeek: (weekId: string | number) => void;
 }
 
 // Componente principal: WeekAccordion
 // Renderiza un acordeón de semanas con elementos de contenido expandibles
-export default function WeekAccordion({ weeks = [], onSelectContent }: WeekAccordionProps) {
-  // Estado para controlar qué semana está expandida
-  const [expandedWeek, setExpandedWeek] = useState<string | number | null>(weeks?.[0]?.id || null);
+export default function WeekAccordion({ weeks = [], onSelectContent, expandedWeek, onToggleWeek }: WeekAccordionProps) {
 
   // Función para alternar la expansión de una semana
   const toggleWeek = (weekId: string | number) => {
-    setExpandedWeek(expandedWeek === weekId ? null : weekId);
+    onToggleWeek(weekId);
   };
 
   // Renderizado del componente
@@ -46,17 +46,15 @@ export default function WeekAccordion({ weeks = [], onSelectContent }: WeekAccor
             <span className="font-medium text-(--text)">{week.title}</span>
             <ChevronDown
               size={18}
-              className={`text-(--text) transition-transform duration-300 ${
-                expandedWeek === week.id ? 'rotate-180' : ''
-              }`}
+              className={`text-(--text) transition-transform duration-300 ${expandedWeek === week.id ? 'rotate-180' : ''
+                }`}
             />
           </button>
 
           {/* Contenedor expandible para los elementos de la semana */}
           <div
-            className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-              expandedWeek === week.id ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-            }`}
+            className={`grid transition-[grid-template-rows] duration-300 ease-out ${expandedWeek === week.id ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+              }`}
           >
             <div className="overflow-hidden">
               <div className="bg-background border-t border-(--card-border)">
@@ -66,9 +64,8 @@ export default function WeekAccordion({ weeks = [], onSelectContent }: WeekAccor
                     <div
                       key={item.id}
                       onClick={() => onSelectContent?.(item)}
-                      className={`p-3 flex items-start gap-3 cursor-pointer transition-colors ${
-                        item.active ? 'bg-(--sidebar-hover)' : 'hover:bg-(--sidebar-hover)'
-                      }`}
+                      className={`p-3 flex items-start gap-3 cursor-pointer transition-colors ${item.active ? 'bg-(--sidebar-hover)' : 'hover:bg-(--sidebar-hover)'
+                        }`}
                     >
                       {/* Icono del elemento */}
                       <FileText size={18} className="text-(--text) mt-0.5 shrink-0" />

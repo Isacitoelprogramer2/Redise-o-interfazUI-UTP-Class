@@ -5,9 +5,10 @@ interface LoginButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   href?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-export const LoginButton = ({ children, onClick, href }: LoginButtonProps) => {
+export const LoginButton = ({ children, onClick, href, type = 'button' }: LoginButtonProps) => {
   const className = "w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors mt-4 cursor-pointer block text-center";
 
   if (href) {
@@ -20,6 +21,7 @@ export const LoginButton = ({ children, onClick, href }: LoginButtonProps) => {
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={className}
     >

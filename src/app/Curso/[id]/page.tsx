@@ -57,6 +57,7 @@ export default function CursoPage() {
   const [course, setCourse] = useState<Course | null>(null);
   const [weeks, setWeeks] = useState<Week[]>([]);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
+  const [expandedWeek, setExpandedWeek] = useState<string | number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -89,15 +90,15 @@ export default function CursoPage() {
         // Fetch contents for all weeks
         const weekIds = weeks.map(w => w.id);
         let contentsData: ContenidoDB[] = [];
-        
+
         if (weekIds.length > 0) {
-            const { data, error: contentsError } = await getSupabase()
+          const { data, error: contentsError } = await getSupabase()
             .from('contenidos')
             .select('id, semana_id, titulo, estado')
             .in('semana_id', weekIds);
-            
-            if (contentsError) throw contentsError;
-            contentsData = (data as ContenidoDB[]) || [];
+
+          if (contentsError) throw contentsError;
+          contentsData = (data as ContenidoDB[]) || [];
         }
 
         // Organize data
@@ -116,6 +117,9 @@ export default function CursoPage() {
         }));
 
         setWeeks(organizedWeeks);
+        if (organizedWeeks.length > 0) {
+          setExpandedWeek(organizedWeeks[0].id);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -161,6 +165,49 @@ export default function CursoPage() {
     }
   };
 
+  const handleNext = async () => {
+    if (!selectedContent || !weeks.length) return;
+
+    // Find current week and item index
+    let currentWeekIndex = -1;
+    let currentItemIndex = -1;
+
+    for (let i = 0; i < weeks.length; i++) {
+      const itemIndex = weeks[i].items.findIndex(item => item.id === selectedContent.id);
+      if (itemIndex !== -1) {
+        currentWeekIndex = i;
+        currentItemIndex = itemIndex;
+        break;
+      }
+    }
+
+    if (currentWeekIndex === -1) return;
+
+    const currentWeek = weeks[currentWeekIndex];
+    let nextContent: ContentItem | null = null;
+    let nextWeekId: string | number | null = null;
+
+    // Check if there is a next item in the current week
+    if (currentItemIndex < currentWeek.items.length - 1) {
+      nextContent = currentWeek.items[currentItemIndex + 1];
+    }
+    // Check if there is a next week
+    else if (currentWeekIndex < weeks.length - 1) {
+      const nextWeek = weeks[currentWeekIndex + 1];
+      if (nextWeek.items.length > 0) {
+        nextContent = nextWeek.items[0];
+        nextWeekId = nextWeek.id;
+      }
+    }
+
+    if (nextContent) {
+      await handleSelectContent(nextContent);
+      if (nextWeekId) {
+        setExpandedWeek(nextWeekId);
+      }
+    }
+  };
+
   if (loading) {
     return <div className="flex min-h-screen items-center justify-center bg-background text-foreground">Cargando...</div>;
   }
@@ -176,10 +223,15 @@ export default function CursoPage() {
         <div className="max-w-[1600px] mx-auto">
           <CourseHeader title={course.nombre} section={course.seccion} />
           <CourseTabs />
-          
+
           <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-200px)]">
-            <WeekAccordion weeks={weeks} onSelectContent={handleSelectContent} />
-            <ContentViewer content={selectedContent} />
+            <WeekAccordion
+              weeks={weeks}
+              onSelectContent={handleSelectContent}
+              expandedWeek={expandedWeek}
+              onToggleWeek={(id) => setExpandedWeek(id === expandedWeek ? null : id)}
+            />
+            <ContentViewer content={selectedContent} onNext={handleNext} />
           </div>
         </div>
       </main>

@@ -10,6 +10,8 @@ interface LoginInputProps {
   icon?: 'user' | 'password';
   warningMessage?: string;
   id: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const LoginInput = ({
@@ -18,7 +20,9 @@ export const LoginInput = ({
   type = 'text',
   icon,
   warningMessage,
-  id
+  id,
+  value,
+  onChange
 }: LoginInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
@@ -34,6 +38,8 @@ export const LoginInput = ({
           id={id}
           type={inputType}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           className="w-full bg-[#171717] border border-[#2d2d2d] text-white rounded-lg py-3 px-4 focus:outline-none focus:border-[#ff4545] transition-colors placeholder-gray-600"
         />
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
