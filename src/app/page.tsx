@@ -9,7 +9,7 @@ import { Tabs, TabItem } from '@/Components/System-UI/Tabs';
 import { ActividadesSemanales } from '@/Components/Cursos-page/ActividadesSemanales';
 import BannerSlide from '@/Components/Cursos-page/bannerSlide';
 import { Notificaciones } from '@/Components/Cursos-page/Notificaciones';
-import { supabase } from '@/Data/SupaBaseClient';
+import { getSupabase } from '@/Data/SupaBaseClient';
 
 // Tipo de curso esperado por la UI
 type Curso = {
@@ -41,7 +41,7 @@ export default function Home() {
     (async () => {
       setLoading(true);
       setError(null);
-      const { data, error } = await supabase
+      const { data, error } = await getSupabase()
         .from('cursos')
         .select('id, nombre, profesor, progreso, modalidad, seccion');
       if (!active) return;

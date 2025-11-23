@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { supabase } from '@/Data/SupaBaseClient';
+import { getSupabase } from '@/Data/SupaBaseClient';
 import CourseHeader from '@/Components/Curso-content/CourseHeader';
 import CourseTabs from '@/Components/Curso-content/CourseTabs';
 import WeekAccordion from '@/Components/Curso-content/WeekAccordion';
@@ -30,6 +30,26 @@ interface Course {
   seccion: string;
 }
 
+// Database types
+interface CursoDB {
+  id: number;
+  nombre: string;
+  seccion: string;
+}
+
+interface SemanaDB {
+  id: number;
+  nombre: string;
+  curso_id: number;
+}
+
+interface ContenidoDB {
+  id: number;
+  semana_id: number;
+  titulo: string;
+  estado: boolean;
+}
+
 export default function CursoPage() {
   const params = useParams();
   const id = params.id;
@@ -46,7 +66,7 @@ export default function CursoPage() {
       setLoading(true);
       try {
         // Fetch course details
-        const { data: courseData, error: courseError } = await supabase
+        const { data: courseData, error: courseError } = await getSupabase()
           .from('cursos')
           .select('id, nombre, seccion')
           .eq('id', id)
@@ -56,30 +76,32 @@ export default function CursoPage() {
         setCourse(courseData);
 
         // Fetch weeks
-        const { data: weeksData, error: weeksError } = await supabase
+        const { data: weeksData, error: weeksError } = await getSupabase()
           .from('semanas')
           .select('id, nombre')
           .eq('curso_id', id)
           .order('id', { ascending: true });
 
+        const weeks = (weeksData as SemanaDB[]) || [];
+
         if (weeksError) throw weeksError;
 
         // Fetch contents for all weeks
-        const weekIds = weeksData.map(w => w.id);
-        let contentsData: any[] = [];
+        const weekIds = weeks.map(w => w.id);
+        let contentsData: ContenidoDB[] = [];
         
         if (weekIds.length > 0) {
-            const { data, error: contentsError } = await supabase
+            const { data, error: contentsError } = await getSupabase()
             .from('contenidos')
             .select('id, semana_id, titulo, estado')
             .in('semana_id', weekIds);
             
             if (contentsError) throw contentsError;
-            contentsData = data || [];
+            contentsData = (data as ContenidoDB[]) || [];
         }
 
         // Organize data
-        const organizedWeeks: Week[] = weeksData.map(week => ({
+        const organizedWeeks: Week[] = weeks.map(week => ({
           id: week.id,
           title: week.nombre,
           items: contentsData
@@ -105,35 +127,8 @@ export default function CursoPage() {
   }, [id]);
 
   const handleSelectContent = async (content: ContentItem) => {
-    // Mark as completed if not already
-    if (!content.completed) {
-      try {
-        const { error } = await supabase
-          .from('contenidos')
-          .update({ estado: true })
-          .eq('id', content.id);
-
-        if (error) throw error;
-
-        // Update local state for weeks
-        setWeeks(prevWeeks => prevWeeks.map(week => ({
-          ...week,
-          items: week.items.map(item =>
-            item.id === content.id ? { ...item, completed: true } : item
-          )
-        })));
-
-        // Update selectedContent if it's the same
-        if (selectedContent && selectedContent.id === content.id) {
-          setSelectedContent({ ...selectedContent, completed: true });
-        }
-      } catch (error) {
-        console.error('Error updating content status:', error);
-      }
-    }
-
-    // Set selected content and update active state
-    setSelectedContent(content.completed ? content : { ...content, completed: true });
+    setSelectedContent(content);
+    // Update active state in weeks
     setWeeks(prevWeeks => prevWeeks.map(week => ({
       ...week,
       items: week.items.map(item => ({
@@ -141,6 +136,29 @@ export default function CursoPage() {
         active: item.id === content.id
       }))
     })));
+
+    // Mark as completed if not already
+    if (!content.completed) {
+      try {
+        const { error } = await getSupabase()
+          .from('contenidos')
+          // @ts-ignore
+          .update({ estado: true })
+          .eq('id', content.id);
+
+        if (error) throw error;
+
+        // Update local state
+        setWeeks(prevWeeks => prevWeeks.map(week => ({
+          ...week,
+          items: week.items.map(item =>
+            item.id === content.id ? { ...item, completed: true } : item
+          )
+        })));
+      } catch (error) {
+        console.error('Error updating content status:', error);
+      }
+    }
   };
 
   if (loading) {
