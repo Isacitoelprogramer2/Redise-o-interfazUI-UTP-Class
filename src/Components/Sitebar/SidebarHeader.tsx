@@ -16,7 +16,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isOpen, onToggle }) => {
       <div className={`flex items-center gap-3 transition-opacity duration-200 ${!isOpen ? 'group-hover:opacity-0' : ''}`}>
         {/* Logo cambia según estado: versión compacta cuando está cerrado */}
         {isOpen ? (
-          <img src="/new-logo.c86d23e3 1.svg" alt="Logo UTP" className="h-6 w-auto" />
+          <img src="/new-logo.c86d23e3_1.svg" alt="Logo UTP" className="h-6 w-auto" />
         ) : (
           <img src="/Logo-utp-simple.svg" alt="Logo UTP simple" className="h-8 w-auto" />
         )}
