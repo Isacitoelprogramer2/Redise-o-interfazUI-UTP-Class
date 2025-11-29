@@ -1,27 +1,35 @@
-export default function CourseTabs() {
-  const tabs = [
-    { name: 'Contenido', active: true },
-    { name: 'Silabo', active: false },
-    { name: 'Evaluaciones', active: false },
-    { name: 'Tareas', active: false },
-    { name: 'Foros', active: false },
-    { name: 'Notas', active: false },
-    { name: 'Anuncios', active: false },
-    { name: 'Zoom', active: false },
+export type TabName = 'Contenido' | 'Silabo' | 'Evaluaciones' | 'Tareas' | 'Foros' | 'Notas' | 'Anuncios' | 'Zoom';
+
+interface CourseTabsProps {
+  activeTab: TabName;
+  onTabChange: (tab: TabName) => void;
+}
+
+export default function CourseTabs({ activeTab, onTabChange }: CourseTabsProps) {
+  const tabs: TabName[] = [
+    'Contenido',
+    'Silabo',
+    'Evaluaciones',
+    'Tareas',
+    'Foros',
+    'Notas',
+    'Anuncios',
+    'Zoom',
   ];
 
   return (
     <div className="flex flex-wrap gap-2 mb-6">
       {tabs.map((tab) => (
         <button
-          key={tab.name}
+          key={tab}
+          onClick={() => onTabChange(tab)}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-            tab.active
+            activeTab === tab
               ? 'bg-[#ff4545] text-white'
               : 'bg-(--card-bg) text-(--text) border border-(--card-border) hover:bg-(--sidebar-hover)'
           }`}
         >
-          {tab.name}
+          {tab}
         </button>
       ))}
     </div>

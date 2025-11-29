@@ -4,10 +4,20 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getSupabase } from '@/Data/SupaBaseClient';
 import CourseHeader from '@/Components/Curso-content/CourseHeader';
-import CourseTabs from '@/Components/Curso-content/CourseTabs';
+import CourseTabs, { TabName } from '@/Components/Curso-content/CourseTabs';
 import WeekAccordion from '@/Components/Curso-content/WeekAccordion';
 import ContentViewer from '@/Components/Curso-content/ContentViewer';
 import SitebarMain from '@/Components/Sitebar/sitebarMain';
+
+// Tab components
+import ContenidoTab from '@/Components/Curso-content/tabs/ContenidoTab';
+import SilaboTab from '@/Components/Curso-content/tabs/SilaboTab';
+import EvaluacionesTab from '@/Components/Curso-content/tabs/EvaluacionesTab';
+import TareasTab from '@/Components/Curso-content/tabs/TareasTab';
+import ForosTab from '@/Components/Curso-content/tabs/ForosTab';
+import NotasTab from '@/Components/Curso-content/tabs/NotasTab';
+import AnunciosTab from '@/Components/Curso-content/tabs/AnunciosTab';
+import ZoomTab from '@/Components/Curso-content/tabs/ZoomTab';
 
 // Types
 interface ContentItem {
@@ -59,6 +69,7 @@ export default function CursoPage() {
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
   const [expandedWeek, setExpandedWeek] = useState<string | number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<TabName>('Contenido');
 
   useEffect(() => {
     if (!id) return;
@@ -222,17 +233,25 @@ export default function CursoPage() {
       <main className="flex-1 p-6 overflow-y-auto h-screen">
         <div className="max-w-[1600px] mx-auto">
           <CourseHeader title={course.nombre} section={course.seccion} />
-          <CourseTabs />
+          <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-200px)]">
-            <WeekAccordion
+          {activeTab === 'Contenido' && (
+            <ContenidoTab
               weeks={weeks}
-              onSelectContent={handleSelectContent}
+              selectedContent={selectedContent}
               expandedWeek={expandedWeek}
+              onSelectContent={handleSelectContent}
               onToggleWeek={(id) => setExpandedWeek(id === expandedWeek ? null : id)}
+              onNext={handleNext}
             />
-            <ContentViewer content={selectedContent} onNext={handleNext} />
-          </div>
+          )}
+          {activeTab === 'Silabo' && <SilaboTab />}
+          {activeTab === 'Evaluaciones' && <EvaluacionesTab />}
+          {activeTab === 'Tareas' && <TareasTab />}
+          {activeTab === 'Foros' && <ForosTab />}
+          {activeTab === 'Notas' && <NotasTab />}
+          {activeTab === 'Anuncios' && <AnunciosTab />}
+          {activeTab === 'Zoom' && <ZoomTab />}
         </div>
       </main>
     </div>
